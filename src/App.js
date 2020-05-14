@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { GlobalStateProvider, Route} from './utils';
+import Header from './components/Header';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import PageServices from './routes/PageServices'
+import PageLogin from './routes/PageLogin';
+import PageBusinessObject from './routes/PageBusinessObject';
+
+const App = () => (
+    <GlobalStateProvider>
+        <Router>
+            <Header/>
+            <Switch>
+                <Route path="/login" component={PageLogin} forGuests/>
+                <Route path="/mbo/:objectName" component={PageBusinessObject} forUsers/>
+                <Route path="/" component={PageServices} forUsers/>
+            </Switch>
+        </Router>
+    </GlobalStateProvider>
+);
 
 export default App;
